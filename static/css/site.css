@@ -1,0 +1,588 @@
+/* mad-lab.org
+   Palette from the Ziehl-Neelsen acid-fast stain: M. tuberculosis takes up
+   carbol fuchsin (magenta) against a methylene blue counterstain. */
+
+:root {
+  --paper: #ffffff;
+  --ink: #161a1e;
+  --muted: #5a6270;
+  --track: #8f99a6;
+  --gene: #dde2e8;
+  --fuchsin: #b3175c;
+  --blue: #1c5a9e;
+
+  --sans: 'Jost', 'Futura', 'Century Gothic', system-ui, sans-serif;
+  --serif: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --measure: 38rem;
+}
+
+html {
+  font-size: clamp(17px, 16px + 0.25vw, 19px);
+}
+
+/* Author display rules (e.g. .track-tip's flex) would otherwise override the
+   hidden attribute and leave "hidden" elements on screen. */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.6 var(--serif);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+a {
+  color: var(--blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+h1, h2 {
+  font-family: var(--sans);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: clamp(2rem, 1.3rem + 2.6vw, 2.8rem);
+  letter-spacing: -0.01em;
+  margin: clamp(1.5rem, 5vw, 3rem) 0 0.75rem;
+}
+
+h2 {
+  font-size: 1.35rem;
+  margin: 2.75rem 0 1.1rem;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+/* Header and footer */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding-block: 1.25rem;
+  font-family: var(--sans);
+}
+
+.brand {
+  display: block;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand img {
+  display: block;
+  width: auto;
+  height: 1.6rem;
+}
+
+.site-header nav > ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-header nav > ul > li > a,
+.menu-toggle {
+  display: inline-block;
+  padding-block: 0.2rem;
+  border-bottom: 2px solid transparent;
+  color: var(--ink);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.site-header nav > ul > li > a:hover,
+.menu-toggle:hover {
+  border-bottom-color: var(--track);
+}
+
+.site-header nav > ul > li > a[aria-current="page"] {
+  border-bottom-color: var(--ink);
+}
+
+/* The GitHub menu: hover opens it where there is a mouse; nav.js adds
+   click, tap and keyboard (it sets .is-open). */
+
+.menu {
+  position: relative;
+}
+
+.menu-toggle {
+  margin: 0;
+  padding-inline: 0;
+  border-top: 0;
+  border-inline: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.menu-toggle::after {
+  content: "";
+  display: inline-block;
+  width: 0.36em;
+  height: 0.36em;
+  margin-left: 0.45em;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-0.2em) rotate(45deg);
+}
+
+.menu-list {
+  position: absolute;
+  top: 100%;
+  left: -0.9rem;
+  z-index: 10;
+  display: none;
+  min-width: 9.5rem;
+  margin: 0;
+  padding: 0.35rem 0;
+  border: 1px solid var(--gene);
+  border-radius: 4px;
+  background: var(--paper);
+  list-style: none;
+}
+
+.menu.is-open .menu-list {
+  display: block;
+}
+
+.menu.is-open .menu-toggle::after {
+  transform: translateY(0.05em) rotate(225deg);
+}
+
+@media (hover: hover) {
+  .menu:hover .menu-list {
+    display: block;
+  }
+
+  /* The arrow follows the menu: up whenever it is showing. */
+  .menu:hover .menu-toggle::after {
+    transform: translateY(0.05em) rotate(225deg);
+  }
+}
+
+.menu-list a {
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem 0.9rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.menu-list a:hover {
+  background: #f3f5f7;
+}
+
+.menu-name {
+  font-size: 0.95rem;
+}
+
+.menu-note {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.site-footer {
+  margin-top: 4.5rem;
+  padding-block: 1.25rem 2.5rem;
+  border-top: 1px solid var(--gene);
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+}
+
+.site-footer a {
+  color: inherit;
+}
+
+/* Home */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(8rem, 12.5rem) 1fr;
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 3rem);
+  margin-block: clamp(1.5rem, 6vw, 4rem) 2rem;
+}
+
+/* The logos have different proportions; a fixed frame keeps the hero steady
+   as they rotate. */
+.hero img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.hero h1 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(2.3rem, 1.2rem + 4vw, 3.8rem);
+  line-height: 1.02;
+}
+
+.hero .role,
+.hero .place {
+  margin: 0;
+  font-family: var(--sans);
+}
+
+.hero .role {
+  font-size: 1.15rem;
+}
+
+.hero .place {
+  color: var(--muted);
+}
+
+.track-figure {
+  position: relative;
+  margin: 0 0 2.5rem;
+}
+
+.track {
+  display: block;
+  width: 100%;
+  height: 4.75rem;
+  overflow: visible;
+  touch-action: pan-y;
+}
+
+.track .insertions line {
+  stroke: var(--track);
+  stroke-width: 1.6px;
+  vector-effect: non-scaling-stroke;
+}
+
+.track .insertions line.is-active {
+  stroke: var(--ink);
+  stroke-width: 2.4px;
+}
+
+.track .axis {
+  stroke: var(--ink);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.track .gene {
+  fill: var(--gene);
+  outline: none;
+}
+
+.track .gene.is-active {
+  fill: var(--track);
+}
+
+.track .gene:focus-visible {
+  stroke: var(--blue);
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+
+.track .essential,
+.track .essential.is-active {
+  fill: var(--fuchsin);
+}
+
+.track .band {
+  fill: var(--ink);
+  opacity: 0;
+}
+
+.track .band.is-shown {
+  opacity: 0.04;
+}
+
+.track .band.is-essential {
+  fill: var(--fuchsin);
+  opacity: 0.08;
+}
+
+.track-tip {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0.3rem 0.55rem;
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.track-tip-detail {
+  color: #c3c9d1;
+}
+
+.track-figure figcaption {
+  max-width: var(--measure);
+  margin-top: 0.6rem;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The one moment of motion: insertions accumulate across the genome,
+     then the gene they avoided takes the stain. */
+  .track .insertions {
+    animation: sweep 1.6s cubic-bezier(0.25, 0.7, 0.25, 1) both;
+  }
+
+  .track .essential {
+    animation: stain 0.6s ease-out 1.35s both;
+  }
+}
+
+@keyframes sweep {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes stain {
+  from { fill: var(--gene); }
+  to { fill: var(--fuchsin); }
+}
+
+.prose {
+  max-width: var(--measure);
+  font-size: 1.1rem;
+}
+
+.software {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem 1.5rem;
+  max-width: 44rem;
+  margin: 0;
+}
+
+.software dt {
+  font-family: var(--sans);
+  font-weight: 500;
+}
+
+.software dd {
+  margin: 0;
+}
+
+.software dd p {
+  margin-bottom: 0.3rem;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  list-style: none;
+}
+
+.links.stacked {
+  flex-direction: column;
+}
+
+.more {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+}
+
+/* Publications */
+
+.lede {
+  max-width: var(--measure);
+  color: var(--muted);
+}
+
+.pub-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pub {
+  max-width: 40rem;
+  margin-bottom: 1.6rem;
+}
+
+.pub p {
+  margin: 0;
+}
+
+.pub-title {
+  margin-bottom: 0.3rem !important;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.pub-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.pub-title a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.pub-authors,
+.pub-venue,
+.pub-notes {
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.pub-authors {
+  color: var(--muted);
+}
+
+.pub-authors b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.pub-notes {
+  color: var(--muted);
+}
+
+.pub-label {
+  margin-left: 0.35em;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+}
+
+.pub .scite-badge {
+  margin-top: 0.45rem;
+}
+
+.pubs-year {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 0 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.pubs-year h2 {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Contact */
+
+.contact {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem 1.5rem;
+  margin: 1.75rem 0 0;
+}
+
+.contact dt {
+  font-family: var(--sans);
+  font-weight: 500;
+}
+
+.contact dd {
+  margin: 0;
+}
+
+.contact .links {
+  gap: 0.55rem;
+  font-family: var(--serif);
+  font-size: 1rem;
+}
+
+.with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.with-icon .icon {
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
+  color: var(--muted);
+}
+
+/* Profile icons keep their brand colors. */
+.scholar .icon { color: #4285f4; }
+.orcid .icon { color: #a6ce39; }
+.github .icon { color: #181717; }
+.linkedin .icon { color: #0a66c2; }
+.researchgate .icon { color: #00ccbb; }
+
+/* Narrow screens */
+
+@media (max-width: 36rem) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero img {
+    width: 10rem;
+  }
+
+  .software,
+  .contact,
+  .pubs-year {
+    grid-template-columns: 1fr;
+  }
+
+  .software dd,
+  .contact dd {
+    margin-bottom: 0.5rem;
+  }
+
+  .pubs-year h2 {
+    position: static;
+    margin-bottom: 0.9rem;
+  }
+}
